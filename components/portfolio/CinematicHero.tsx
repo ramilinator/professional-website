@@ -155,6 +155,7 @@ function CodeCard() {
 }
 
 export default function CinematicHero() {
+  const transitionPointRef = useRef<HTMLSpanElement>(null);
   const rootRef = useRef<HTMLElement>(null);
   const sceneOneRef = useRef<HTMLDivElement>(null);
   const sceneTwoRef = useRef<HTMLDivElement>(null);
@@ -171,6 +172,7 @@ export default function CinematicHero() {
     const name = nameRef.current;
     const portrait = portraitRef.current;
     const rocket = rocketRef.current;
+    const transitionPoint = transitionPointRef.current;
 
     if (
       !root ||
@@ -179,7 +181,8 @@ export default function CinematicHero() {
       !sceneThree ||
       !name ||
       !portrait ||
-      !rocket
+      !rocket ||
+      !transitionPoint
     ) {
       return;
     }
@@ -258,22 +261,33 @@ export default function CinematicHero() {
           },
         });
 
-        // SCENE 01 — Oversized name zooms toward the viewer.
+        // SCENE 01 — Orange square expands to cover the screen.
         timeline
+
           .to(
-            name,
+            transitionPoint,
             {
-              scale: conditions.mobile ? 11 : 14,
-              duration: 1.2,
+              scale: () => {
+                const rect = transitionPoint.getBoundingClientRect();
+                const diagonal = Math.hypot(
+                  window.innerWidth,
+                  window.innerHeight,
+                );
+
+                return (diagonal * 2) / Math.min(rect.width, rect.height);
+              },
+              rotation: 180,
+              duration: 1,
               ease: "power2.in",
             },
-            0,
+            0.5,
           )
-          .to(".intro-meta", { autoAlpha: 0, y: -25, duration: 0.35 }, 0)
-          .to(sceneOne, { autoAlpha: 0, duration: 0.25 }, 0.9)
 
-          // SCENE 02 — Red-orange profile reveal.
-          .set(sceneTwo, { autoAlpha: 1 }, 1)
+          // Wait until the orange completely covers the screen.
+          .set(sceneTwo, { autoAlpha: 1 }, 1.5)
+          .set(sceneOne, { autoAlpha: 0 }, 1.5)
+
+          // SCENE 02 — Reveal the profile after the orange transition.
           .fromTo(
             ".profile-backdrop-shape",
             { scale: 0.75, rotate: -12 },
@@ -283,7 +297,7 @@ export default function CinematicHero() {
               duration: 0.7,
               ease: "power3.out",
             },
-            1,
+            1.5,
           )
           .to(
             portrait,
@@ -294,7 +308,7 @@ export default function CinematicHero() {
               duration: 0.7,
               ease: "power3.out",
             },
-            1.05,
+            1.65,
           )
           .to(
             ".profile-copy > *",
@@ -305,7 +319,7 @@ export default function CinematicHero() {
               duration: 0.55,
               ease: "power3.out",
             },
-            1.2,
+            1.7,
           )
           .to(
             ".orbit-card",
@@ -315,19 +329,21 @@ export default function CinematicHero() {
               stagger: 0.1,
               duration: 0.45,
             },
-            1.45,
+            1.95,
           )
+
+          // SCENE 02 — Transition out of the profile.
           .to(
             sceneTwo,
             {
               autoAlpha: 0,
               duration: 0.3,
             },
-            2,
+            2.4,
           )
 
-          // SCENE 03 — Paper rocket rises from the bottom.
-          .set(sceneThree, { autoAlpha: 1 }, 2.05)
+          // SCENE 03 — ROCKET LAUNCH
+          .set(sceneThree, { autoAlpha: 1 }, 2.45)
           .to(
             ".launch-copy > *",
             {
@@ -337,7 +353,7 @@ export default function CinematicHero() {
               duration: 0.45,
               ease: "power3.out",
             },
-            2.15,
+            2.55,
           )
           .to(
             rocket,
@@ -347,12 +363,16 @@ export default function CinematicHero() {
               duration: 0.85,
               ease: "power2.in",
             },
-            2.12,
+            2.52,
           )
           .to(
             ".rocket-trail",
-            { scaleY: 1.5, autoAlpha: 1, duration: 0.5 },
-            2.15,
+            {
+              scaleY: 1.5,
+              autoAlpha: 1,
+              duration: 0.5,
+            },
+            2.55,
           )
           .to(
             ".launch-orbit",
@@ -361,7 +381,7 @@ export default function CinematicHero() {
               rotate: 10,
               duration: 0.85,
             },
-            2.15,
+            2.55,
           );
 
         return () => {
@@ -405,7 +425,12 @@ export default function CinematicHero() {
             <h1 ref={nameRef} className="intro-name">
               RAMIL
               <br />
-              AOANAN<span className="name-period">.</span>
+              AOANAN
+              <span
+                ref={transitionPointRef}
+                className="name-period transition-square"
+                aria-hidden="true"
+              />
             </h1>
 
             <div className="intro-meta">

@@ -732,6 +732,28 @@
     color: #77736e;
 }
 
+.scene-intro {
+    z-index: 1;
+}
+
+.transition-square {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    width: 0.14em;
+    height: 0.14em;
+    margin-left: 0.04em;
+    vertical-align: baseline;
+    background: #ff572f;
+    border-radius: 2px;
+    transform-origin: 50% 50%;
+    will-change: transform;
+}
+
+.scene-profile {
+    z-index: 2;
+}
+
 /* Motion accessibility */
 
 @media (prefers-reduced-motion: reduce) {
