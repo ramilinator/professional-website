@@ -7,646 +7,933 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowDown,
+  ArrowDownRight,
+  ArrowRight,
   ArrowUpRight,
   Braces,
+  Check,
   Code2,
   Layers3,
   MousePointer2,
   Rocket,
+  Sparkles,
+  Terminal,
+  Workflow,
+  Zap,
 } from "lucide-react";
-
-import "./CinematicHero.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function PaperRocket() {
+const BRAND = {
+  cream: "#F5F0E7",
+  orange: "#F15A36",
+  charcoal: "#242321",
+  muted: "#77736D",
+};
+
+const scenes = [
+  {
+    number: "01",
+    eyebrow: "THE BEGINNING",
+    title: "Every great thing starts with an idea.",
+    description:
+      "Every website, application, and digital experience begins with a question: what if we could make this better?",
+    tag: "IDEA → POSSIBILITY",
+    icon: Sparkles,
+    background: "bg-[#F5F0E7]",
+    visual: "idea",
+  },
+  {
+    number: "02",
+    eyebrow: "THE DIRECTION",
+    title: "Give the idea a vision.",
+    description:
+      "A good concept needs direction. I turn ideas into thoughtful layouts, purposeful interfaces, and experiences built around real people.",
+    tag: "VISION → BLUEPRINT",
+    icon: Workflow,
+    background: "bg-[#242321] text-[#F5F0E7]",
+    visual: "vision",
+  },
+  {
+    number: "03",
+    eyebrow: "THE CRAFT",
+    title: "Then, we build.",
+    description:
+      "I bring designs to life with clean, maintainable code and modern web technologies—building interfaces that work as beautifully as they look.",
+    tag: "BLUEPRINT → CODE",
+    icon: Code2,
+    background: "bg-[#F5F0E7]",
+    visual: "build",
+  },
+  {
+    number: "04",
+    eyebrow: "THE INTERACTION",
+    title: "Make every interaction count.",
+    description:
+      "Navigation should feel natural. Feedback should feel immediate. Every interaction should help people move confidently through the experience.",
+    tag: "CODE → INTERACTION",
+    icon: MousePointer2,
+    background: "bg-[#EEE6DA]",
+    visual: "experience",
+  },
+  {
+    number: "05",
+    eyebrow: "THE FINISHING TOUCH",
+    title: "The details make the difference.",
+    description:
+      "Spacing, typography, accessibility, responsiveness, and performance all matter. I refine the details until everything feels intentional.",
+    tag: "INTERACTION → PRECISION",
+    icon: Check,
+    background: "bg-[#242321] text-[#F5F0E7]",
+    visual: "details",
+  },
+  {
+    number: "06",
+    eyebrow: "THE TOOLKIT",
+    title: "Technology with a purpose.",
+    description:
+      "From React and Next.js to Tailwind CSS and headless CMS platforms, I choose tools that fit the problem instead of adding complexity for its own sake.",
+    tag: "PRECISION → TECHNOLOGY",
+    icon: Terminal,
+    background: "bg-[#F5F0E7]",
+    visual: "technology",
+  },
+  {
+    number: "07",
+    eyebrow: "THE CONNECTION",
+    title: "Turn complexity into clarity.",
+    description:
+      "A successful product brings its design, content, and functionality together. The result is a digital experience that feels like one complete solution.",
+    tag: "TECHNOLOGY → INTEGRATION",
+    icon: Layers3,
+    background: "bg-[#EEE6DA]",
+    visual: "transformation",
+  },
+  {
+    number: "08",
+    eyebrow: "THE MOMENT",
+    title: "Ready for launch.",
+    description:
+      "Testing, refining, and preparing for production turn a promising build into something people can actually use. This is where the work comes together.",
+    tag: "INTEGRATION → LAUNCH",
+    icon: Rocket,
+    background: "bg-[#242321] text-[#F5F0E7]",
+    visual: "launch",
+  },
+  {
+    number: "09",
+    eyebrow: "THE NEXT CHAPTER",
+    title: "Let's build something meaningful.",
+    description:
+      "Have a website, product, or idea in mind? Let's turn your next challenge into a thoughtful digital experience.",
+    tag: "YOUR IDEA → OUR NEXT PROJECT",
+    icon: ArrowUpRight,
+    background: "bg-[#F15A36] text-[#242321]",
+    visual: "final",
+  },
+];
+
+function BrandMark({ light = false }: { light?: boolean }) {
   return (
-    <svg
-      viewBox="0 0 220 340"
-      className="paper-rocket"
-      role="img"
-      aria-label="Illustrated paper rocket launching upward"
+    <Link
+      href="/"
+      aria-label="Ramil Aoanan home"
+      className={`inline-flex items-center gap-2 text-xl font-black tracking-tight ${
+        light ? "text-[#F5F0E7]" : "text-[#242321]"
+      }`}
     >
-      <defs>
-        <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="100%" stopColor="#dedbd6" />
-        </linearGradient>
-        <linearGradient id="rocketFlame" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffdb69" />
-          <stop offset="50%" stopColor="#ff7438" />
-          <stop offset="100%" stopColor="#ef3529" />
-        </linearGradient>
-      </defs>
-
-      {/* Layered paper exhaust */}
-      <path d="M78 230 L105 326 L123 269 L146 320 L148 228Z" fill="#d52c24" />
-      <path d="M87 229 L108 304 L119 253 L135 290 L139 225Z" fill="#ff793d" />
-      <path d="M102 228 L111 278 L124 239 L126 228Z" fill="url(#rocketFlame)" />
-
-      {/* Left fin */}
-      <path d="M91 174 L45 230 L96 214Z" fill="#c72e27" />
-      <path d="M91 174 L60 215 L97 205Z" fill="#f15b43" />
-
-      {/* Right fin */}
-      <path d="M128 174 L176 230 L126 214Z" fill="#d43b2e" />
-      <path d="M128 174 L162 215 L125 205Z" fill="#ff7952" />
-
-      {/* Main paper fuselage */}
-      <path
-        d="M110 18
-           C79 48 70 95 75 154
-           L88 211
-           L110 231
-           L132 211
-           L145 154
-           C150 95 141 48 110 18Z"
-        fill="url(#rocketBody)"
-        stroke="#282322"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-
-      {/* Folded paper plane */}
-      <path
-        d="M110 18 L110 231 L88 211 L75 154
-           C70 95 79 48 110 18Z"
-        fill="#f7f4ef"
-      />
-      <path
-        d="M110 18 L110 231 L132 211 L145 154
-           C150 95 141 48 110 18Z"
-        fill="#d2cfcb"
-      />
-      <path
-        d="M110 24 L110 225"
-        stroke="#aaa5a0"
-        strokeWidth="1.5"
-        strokeDasharray="4 5"
-      />
-
-      {/* Window */}
-      <circle cx="110" cy="112" r="22" fill="#292626" />
-      <circle cx="110" cy="112" r="16" fill="#ff7048" />
-      <path
-        d="M101 103 Q109 96 118 104"
-        fill="none"
-        stroke="#fff0d8"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-
-      {/* Small graphic detail */}
-      <path
-        d="M92 166 L105 179 L92 192"
-        fill="none"
-        stroke="#ee5338"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M120 180 H132"
-        stroke="#ee5338"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-    </svg>
+      RA<span className="text-[#F15A36]">.</span>
+    </Link>
   );
 }
 
-function CodeCard() {
+function SectionLabel({
+  number,
+  children,
+  light = false,
+}: {
+  number: string;
+  children: React.ReactNode;
+  light?: boolean;
+}) {
   return (
-    <div className="code-card" aria-hidden="true">
-      <div className="code-card-header">
-        <span />
-        <span />
-        <span />
-        <small>portfolio.tsx</small>
-      </div>
-      <div className="code-lines">
-        <p>
-          <i>01</i> <b>const</b> developer = {"{"}
-        </p>
-        <p>
-          <i>02</i> &nbsp; name: <em>"Ramil"</em>,
-        </p>
-        <p>
-          <i>03</i> &nbsp; stack: [
-        </p>
-        <p>
-          <i>04</i> &nbsp;&nbsp; <em>"React"</em>,
-        </p>
-        <p>
-          <i>05</i> &nbsp;&nbsp; <em>"Next.js"</em>
-        </p>
-        <p>
-          <i>06</i> &nbsp; ],
-        </p>
-        <p>
-          <i>07</i> &nbsp; build: <strong>true</strong>
-        </p>
-        <p>
-          <i>08</i> {"};"}
-        </p>
-      </div>
+    <div
+      className={`mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] ${
+        light ? "text-white/55" : "text-[#77736D]"
+      }`}
+    >
+      <span className="text-[#F15A36]">{number}</span>
+      <span className="h-px w-8 bg-[#F15A36]" />
+      <span>{children}</span>
     </div>
   );
 }
 
-export default function CinematicHero() {
-  const transitionPointRef = useRef<HTMLSpanElement>(null);
-  const rootRef = useRef<HTMLElement>(null);
-  const sceneOneRef = useRef<HTMLDivElement>(null);
-  const sceneTwoRef = useRef<HTMLDivElement>(null);
-  const sceneThreeRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLHeadingElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
-  const rocketRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    const sceneOne = sceneOneRef.current;
-    const sceneTwo = sceneTwoRef.current;
-    const sceneThree = sceneThreeRef.current;
-    const name = nameRef.current;
-    const portrait = portraitRef.current;
-    const rocket = rocketRef.current;
-    const transitionPoint = transitionPointRef.current;
-
-    if (
-      !root ||
-      !sceneOne ||
-      !sceneTwo ||
-      !sceneThree ||
-      !name ||
-      !portrait ||
-      !rocket ||
-      !transitionPoint
-    ) {
-      return;
-    }
-
-    const mm = gsap.matchMedia();
-
-    mm.add(
-      {
-        desktop: "(min-width: 768px)",
-        mobile: "(max-width: 767px)",
-        reduceMotion: "(prefers-reduced-motion: reduce)",
-      },
-      (context) => {
-        const conditions = context.conditions as {
-          desktop: boolean;
-          mobile: boolean;
-          reduceMotion: boolean;
-        };
-
-        const reducedMotion = conditions.reduceMotion;
-
-        gsap.set(sceneOne, { autoAlpha: 1 });
-        gsap.set(sceneTwo, { autoAlpha: 0 });
-        gsap.set(sceneThree, { autoAlpha: 0 });
-
-        gsap.set(name, {
-          scale: 1,
-          transformOrigin: "50% 50%",
-        });
-
-        gsap.set(portrait, {
-          y: reducedMotion ? 0 : 70,
-          autoAlpha: reducedMotion ? 1 : 0,
-          rotate: reducedMotion ? 0 : -3,
-        });
-
-        gsap.set(".profile-copy > *", {
-          y: reducedMotion ? 0 : 30,
-          autoAlpha: reducedMotion ? 1 : 0,
-        });
-
-        gsap.set(".launch-copy > *", {
-          y: reducedMotion ? 0 : 25,
-          autoAlpha: reducedMotion ? 1 : 0,
-        });
-
-        gsap.set(rocket, {
-          y: reducedMotion ? 0 : 470,
-          rotate: reducedMotion ? 0 : -8,
-          transformOrigin: "50% 50%",
-        });
-
-        gsap.set(".orbit-card", {
-          autoAlpha: 0,
-          y: reducedMotion ? 0 : 25,
-        });
-
-        if (reducedMotion) {
-          gsap.set([sceneOne, sceneTwo, sceneThree], {
-            clearProps: "visibility",
-          });
-
-          return;
-        }
-
-        const timeline = gsap.timeline({
-          defaults: { ease: "power2.inOut" },
-          scrollTrigger: {
-            trigger: root,
-            start: "top top",
-            end: () => `+=${window.innerHeight * 3}`,
-            pin: true,
-            scrub: 0.8,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        // SCENE 01 — Orange square expands to cover the screen.
-        timeline
-
-          .to(
-            transitionPoint,
-            {
-              scale: () => {
-                const rect = transitionPoint.getBoundingClientRect();
-                const diagonal = Math.hypot(
-                  window.innerWidth,
-                  window.innerHeight,
-                );
-
-                return (diagonal * 2) / Math.min(rect.width, rect.height);
-              },
-              rotation: 180,
-              duration: 1,
-              ease: "power2.in",
-            },
-            0.5,
-          )
-
-          // Wait until the orange completely covers the screen.
-          .set(sceneTwo, { autoAlpha: 1 }, 1.5)
-          .set(sceneOne, { autoAlpha: 0 }, 1.5)
-
-          // SCENE 02 — Reveal the profile after the orange transition.
-          .fromTo(
-            ".profile-backdrop-shape",
-            { scale: 0.75, rotate: -12 },
-            {
-              scale: 1,
-              rotate: 0,
-              duration: 0.7,
-              ease: "power3.out",
-            },
-            1.5,
-          )
-          .to(
-            portrait,
-            {
-              y: 0,
-              autoAlpha: 1,
-              rotate: 0,
-              duration: 0.7,
-              ease: "power3.out",
-            },
-            1.65,
-          )
-          .to(
-            ".profile-copy > *",
-            {
-              y: 0,
-              autoAlpha: 1,
-              stagger: 0.12,
-              duration: 0.55,
-              ease: "power3.out",
-            },
-            1.7,
-          )
-          .to(
-            ".orbit-card",
-            {
-              autoAlpha: 1,
-              y: 0,
-              stagger: 0.1,
-              duration: 0.45,
-            },
-            1.95,
-          )
-
-          // SCENE 02 — Transition out of the profile.
-          .to(
-            sceneTwo,
-            {
-              autoAlpha: 0,
-              duration: 0.3,
-            },
-            2.4,
-          )
-
-          // SCENE 03 — ROCKET LAUNCH
-          .set(sceneThree, { autoAlpha: 1 }, 2.45)
-          .to(
-            ".launch-copy > *",
-            {
-              y: 0,
-              autoAlpha: 1,
-              stagger: 0.1,
-              duration: 0.45,
-              ease: "power3.out",
-            },
-            2.55,
-          )
-          .to(
-            rocket,
-            {
-              y: conditions.mobile ? -480 : -620,
-              rotate: 4,
-              duration: 0.85,
-              ease: "power2.in",
-            },
-            2.52,
-          )
-          .to(
-            ".rocket-trail",
-            {
-              scaleY: 1.5,
-              autoAlpha: 1,
-              duration: 0.5,
-            },
-            2.55,
-          )
-          .to(
-            ".launch-orbit",
-            {
-              y: -35,
-              rotate: 10,
-              duration: 0.85,
-            },
-            2.55,
-          );
-
-        return () => {
-          timeline.scrollTrigger?.kill();
-          timeline.kill();
-        };
-      },
-    );
-
-    return () => {
-      mm.revert();
-    };
-  }, []);
-
+function PaperRocket() {
   return (
-    <section
-      ref={rootRef}
-      className="cinematic-hero"
-      aria-label="Ramil Aoanan portfolio introduction"
-    >
-      <div className="cinematic-stage">
-        {/* =================================================
-            SCENE 01 — NAME IMPACT
-        ================================================= */}
-        <div ref={sceneOneRef} className="hero-scene scene-intro">
-          <div className="intro-grid" aria-hidden="true" />
+    <div className="relative mx-auto flex aspect-square w-full max-w-[370px] items-center justify-center">
+      <div className="absolute inset-[10%] rounded-full border border-[#242321]/10" />
+      <div className="absolute inset-[20%] rounded-full border border-dashed border-[#242321]/15" />
 
-          <div className="intro-top">
-            <Link href="/" className="brand-mark">
-              RA<span>.</span>
-            </Link>
-            <span className="top-label">INDEPENDENT WEB DEVELOPER</span>
-            <span className="scene-number">01 / 03</span>
-          </div>
+      <div className="absolute left-[9%] top-[23%] h-2 w-2 rounded-full bg-[#F15A36]" />
+      <div className="absolute right-[14%] top-[34%] h-3 w-3 rounded-full bg-[#242321]/20" />
+      <div className="absolute bottom-[21%] left-[22%] h-1.5 w-1.5 rounded-full bg-[#F15A36]" />
 
-          <div className="intro-center">
-            <p className="intro-eyebrow">
-              DIGITAL CRAFT · FRONTEND ENGINEERING
-            </p>
+      <svg
+        viewBox="0 0 320 320"
+        fill="none"
+        role="img"
+        aria-label="Illustration of an orange paper rocket"
+        className="relative z-10 w-[82%] drop-shadow-xl"
+      >
+        <g transform="rotate(-38 160 160)">
+          <path
+            d="M160 43 C127 76 111 124 111 180 L160 222 L209 180 C209 124 193 76 160 43Z"
+            fill="#F15A36"
+          />
+          <path
+            d="M160 43 C177 80 184 126 184 180 L160 222 L111 180 C111 124 127 76 160 43Z"
+            fill="#FF8A6D"
+          />
+          <path d="M111 157 L73 196 L111 205Z" fill="#242321" />
+          <path d="M209 157 L247 196 L209 205Z" fill="#242321" />
+          <circle cx="160" cy="139" r="19" fill="#F5F0E7" />
+          <circle cx="160" cy="139" r="11" fill="#242321" />
+          <path d="M145 220 L160 267 L175 220Z" fill="#F15A36" />
+          <path d="M154 229 L160 267 L166 229Z" fill="#FFB49F" />
+        </g>
+        <path
+          d="M75 246 L103 246 M89 232 L89 260"
+          stroke="#242321"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M224 79 L246 79 M235 68 L235 90"
+          stroke="#F15A36"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </svg>
 
-            <h1 ref={nameRef} className="intro-name">
-              RAMIL
-              <br />
-              AOANAN
-              <span
-                ref={transitionPointRef}
-                className="name-period transition-square"
-                aria-hidden="true"
-              />
-            </h1>
+      <span className="absolute bottom-[8%] right-[2%] font-mono text-[10px] tracking-widest text-[#77736D]">
+        BUILT TO EXPLORE
+      </span>
+    </div>
+  );
+}
 
-            <div className="intro-meta">
-              <span>DESIGN MINDED.</span>
-              <span>CODE DRIVEN.</span>
-              <span>BUILT FOR THE WEB.</span>
-            </div>
-          </div>
-
-          <div className="intro-bottom">
-            <div className="intro-bottom-left">
-              <Code2 size={16} />
-              <span>REACT / NEXT.JS / TYPESCRIPT</span>
-            </div>
-            <div className="scroll-cue">
-              <span>SCROLL TO EXPLORE</span>
-              <ArrowDown size={15} />
-            </div>
-          </div>
-
-          <div className="intro-cross intro-cross-one" aria-hidden="true">
-            +
-          </div>
-          <div className="intro-cross intro-cross-two" aria-hidden="true">
-            +
-          </div>
+function SceneVisual({ type }: { type: string }) {
+  if (type === "idea") {
+    return (
+      <div className="relative flex min-h-[300px] items-center justify-center">
+        <div className="absolute h-64 w-64 rounded-full bg-[#F15A36]/10 blur-3xl" />
+        <div className="relative flex h-52 w-52 rotate-[-8deg] items-center justify-center border border-[#242321]/15 bg-white/40 shadow-xl">
+          <Sparkles size={78} strokeWidth={1.1} className="text-[#F15A36]" />
+          <span className="absolute -right-5 -top-4 bg-[#F15A36] px-3 py-2 font-mono text-xs text-white">
+            WHAT IF?
+          </span>
+          <span className="absolute -bottom-4 -left-5 bg-[#242321] px-3 py-2 font-mono text-xs text-white">
+            START HERE
+          </span>
         </div>
+      </div>
+    );
+  }
 
-        {/* =================================================
-            SCENE 02 — PROFILE REVEAL
-        ================================================= */}
-        <div ref={sceneTwoRef} className="hero-scene scene-profile">
-          <div className="profile-texture" aria-hidden="true" />
-
-          <div className="profile-top">
-            <Link href="/" className="brand-mark brand-mark-light">
-              RA<span>.</span>
-            </Link>
-            <span className="top-label">A LITTLE ABOUT ME</span>
-            <span className="scene-number">02 / 03</span>
+  if (type === "vision") {
+    return (
+      <div className="relative mx-auto flex min-h-[300px] w-full max-w-md items-center justify-center">
+        <div className="absolute h-56 w-56 rounded-full border border-white/10" />
+        <div className="absolute h-40 w-40 rounded-full border border-dashed border-[#F15A36]/50" />
+        <div className="relative w-[85%] rotate-[-4deg] border border-white/15 bg-white/[0.04] p-5">
+          <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-3">
+            <span className="font-mono text-xs text-white/60">
+              PROJECT / 001
+            </span>
+            <span className="h-2 w-2 rounded-full bg-[#F15A36]" />
           </div>
-
-          <div className="profile-layout">
-            <div className="profile-copy">
-              <p className="profile-eyebrow">
-                <span className="status-dot" />
-                AVAILABLE FOR OPPORTUNITIES
-              </p>
-
-              <h2>
-                I TURN
-                <br />
-                IDEAS INTO
-                <br />
-                <span>DIGITAL</span>
-                <br />
-                EXPERIENCES.
-              </h2>
-
-              <p className="profile-description">
-                I'm Ramil, a web developer who builds thoughtful, responsive,
-                and user-friendly experiences for the web. I bring design and
-                code together to make useful things.
-              </p>
-
-              <div className="skill-list">
-                <span>React</span>
-                <span>Next.js</span>
-                <span>TypeScript</span>
-                <span>Tailwind CSS</span>
-                <span>WordPress</span>
-                <span>Strapi</span>
-              </div>
-
-              <div className="profile-actions">
-                <Link href="#projects" className="hero-button">
-                  EXPLORE MY WORK <ArrowUpRight size={17} />
-                </Link>
-                <span className="experience-note">
-                  05+ YEARS
-                  <small>WEB DEVELOPMENT</small>
-                </span>
-              </div>
-            </div>
-
-            <div className="profile-visual">
-              <div className="profile-backdrop-shape" />
-
-              <div className="profile-index">
-                <span>PROFILE_001</span>
-                <span>PH / WEB</span>
-              </div>
-
-              <div ref={portraitRef} className="portrait-frame">
-                <Image
-                  src="/images/profile.png"
-                  alt="Ramil Aoanan, web developer"
-                  width={640}
-                  height={800}
-                  priority
-                  className="portrait-image"
-                  sizes="(max-width: 767px) 75vw, 38vw"
-                />
-                <div className="portrait-caption">
-                  <span>RAMIL AOANAN</span>
-                  <span>WEB DEVELOPER ↗</span>
-                </div>
-              </div>
-
-              <div className="orbit-card orbit-card-code">
-                <Braces size={19} />
-                <div>
-                  <strong>Clean code</strong>
-                  <small>Made to scale</small>
-                </div>
-              </div>
-
-              <div className="orbit-card orbit-card-stack">
-                <Layers3 size={19} />
-                <div>
-                  <strong>Modern stack</strong>
-                  <small>Design to deployment</small>
-                </div>
-              </div>
-
-              <CodeCard />
+          <div className="space-y-3">
+            <div className="h-3 w-3/4 bg-[#F5F0E7]/80" />
+            <div className="h-2 w-full bg-white/15" />
+            <div className="h-2 w-4/5 bg-white/15" />
+            <div className="mt-5 flex gap-3">
+              <div className="h-20 flex-1 bg-[#F15A36]/80" />
+              <div className="h-20 flex-1 border border-white/20" />
             </div>
           </div>
-
-          <div className="profile-bottom">
-            <span>THOUGHTFUL DESIGN. SOLID ENGINEERING.</span>
-            <span>SCROLL TO LAUNCH ↓</span>
-          </div>
+          <span className="mt-4 block font-mono text-[10px] tracking-widest text-white/45">
+            STRUCTURE / DIRECTION / PURPOSE
+          </span>
         </div>
+      </div>
+    );
+  }
 
-        {/* =================================================
-            SCENE 03 — ROCKET LAUNCH
-        ================================================= */}
-        <div ref={sceneThreeRef} className="hero-scene scene-launch">
-          <div className="launch-grid" aria-hidden="true" />
-
-          <div className="launch-top">
-            <Link href="/" className="brand-mark">
-              RA<span>.</span>
-            </Link>
-            <span className="top-label">THE NEXT CHAPTER</span>
-            <span className="scene-number">03 / 03</span>
-          </div>
-
-          <div className="launch-copy">
-            <p className="launch-eyebrow">
-              <Rocket size={16} />
-              IDEAS IN MOTION
-            </p>
-
-            <h2>
-              LET'S
-              <br />
-              BUILD
-              <br />
-              <span>WHAT'S NEXT.</span>
-            </h2>
-
-            <p className="launch-description">
-              Every great digital experience starts with an idea. Let's turn
-              yours into something real.
-            </p>
-
-            <div className="launch-actions">
-              <Link href="#contact" className="launch-button">
-                START A PROJECT <ArrowUpRight size={18} />
-              </Link>
-
-              <a
-                href="https://github.com/ramilinator"
-                target="_blank"
-                rel="noreferrer"
-                className="github-link"
-              >
-                <Code2 size={17} />
-                GITHUB
-              </a>
+  if (type === "build" || type === "technology") {
+    return (
+      <div className="mx-auto w-full max-w-md overflow-hidden rounded-xl border border-[#242321]/15 bg-[#242321] shadow-2xl">
+        <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#F15A36]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
+          <span className="ml-auto font-mono text-[10px] text-white/45">
+            {type === "build" ? "experience.tsx" : "tech-stack.json"}
+          </span>
+        </div>
+        <div className="space-y-3 p-5 font-mono text-xs sm:text-sm">
+          <p className="text-[#F15A36]">
+            {type === "build" ? "const" : "{"}{" "}
+            <span className="text-white">
+              {type === "build" ? "experience" : '"stack"'}
+            </span>{" "}
+            <span className="text-white/50">
+              {type === "build" ? "=" : ":"}
+            </span>
+          </p>
+          <p className="pl-5 text-[#F5F0E7]/70">
+            {type === "build" ? "{" : "["}
+          </p>
+          {(type === "build"
+            ? ["thoughtfulDesign", "cleanCode", "responsiveLayout"]
+            : ["React", "Next.js", "Tailwind CSS", "Strapi"]
+          ).map((item, index) => (
+            <div key={item} className="flex items-center gap-3 pl-8">
+              <span className="text-white/30">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="text-[#F5F0E7]">{item}</span>
+              <Check size={13} className="ml-auto text-[#F15A36]" />
             </div>
-          </div>
-
-          <div className="launch-illustration" aria-hidden="true">
-            <div className="launch-orbit launch-orbit-one" />
-            <div className="launch-orbit launch-orbit-two" />
-
-            <div className="rocket-trail" />
-
-            <div ref={rocketRef} className="rocket-wrap">
-              <PaperRocket />
-            </div>
-
-            <div className="launch-sticker launch-sticker-one">
-              <MousePointer2 size={18} />
-              <span>CREATE</span>
-            </div>
-
-            <div className="launch-sticker launch-sticker-two">
-              <Code2 size={18} />
-              <span>DEPLOY</span>
-            </div>
-
-            <div className="launch-star launch-star-one">✳</div>
-            <div className="launch-star launch-star-two">✳</div>
-            <div className="launch-star launch-star-three">+</div>
-          </div>
-
-          <div className="launch-bottom">
-            <span>RAMIL AOANAN © 2026</span>
-            <span>DESIGNED TO MOVE FORWARD ↗</span>
+          ))}
+          <p className="pl-5 text-[#F5F0E7]/70">
+            {type === "build" ? "}" : "]"}
+          </p>
+          <div className="mt-5 border-t border-white/10 pt-4 text-[10px] tracking-widest text-white/45">
+            STATUS: READY TO BUILD
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (type === "experience") {
+    return (
+      <div className="mx-auto flex min-h-[300px] w-full max-w-md items-center justify-center">
+        <div className="w-[82%] -rotate-3 border border-[#242321]/10 bg-white p-4 shadow-xl">
+          <div className="flex items-center gap-2 border-b border-[#242321]/10 pb-3">
+            <div className="h-7 w-7 rounded-full bg-[#F15A36]" />
+            <div className="h-2 w-24 bg-[#242321]/15" />
+            <div className="ml-auto h-2 w-8 bg-[#242321]/10" />
+          </div>
+          <div className="grid grid-cols-[1fr_1.2fr] gap-3 py-5">
+            <div className="space-y-2 pt-3">
+              <div className="h-3 w-full bg-[#242321]" />
+              <div className="h-2 w-4/5 bg-[#242321]/15" />
+              <div className="h-2 w-full bg-[#242321]/15" />
+              <div className="mt-4 h-7 w-20 bg-[#F15A36]" />
+            </div>
+            <div className="flex min-h-36 items-center justify-center bg-[#EEE6DA]">
+              <MousePointer2
+                size={46}
+                strokeWidth={1.2}
+                className="text-[#F15A36]"
+              />
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <div className="h-2 flex-1 bg-[#242321]/10" />
+            <div className="h-2 flex-1 bg-[#242321]/10" />
+            <div className="h-2 flex-1 bg-[#242321]/10" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "details") {
+    return (
+      <div className="mx-auto flex min-h-[300px] w-full max-w-md items-center justify-center">
+        <div className="relative w-[80%] border border-white/15 p-5">
+          <div className="absolute -right-3 -top-3 bg-[#F15A36] p-3">
+            <Check size={22} />
+          </div>
+          <p className="mb-6 font-mono text-xs tracking-widest text-white/45">
+            QUALITY CHECK
+          </p>
+          {[
+            "Responsive layout",
+            "Accessible controls",
+            "Clean typography",
+            "Performance",
+          ].map((item, index) => (
+            <div
+              key={item}
+              className="flex items-center gap-3 border-b border-white/10 py-4 text-sm"
+            >
+              <span className="font-mono text-xs text-[#F15A36]">
+                0{index + 1}
+              </span>
+              <span className="text-white/85">{item}</span>
+              <Check size={15} className="ml-auto text-[#F15A36]" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "transformation") {
+    return (
+      <div className="mx-auto flex min-h-[300px] w-full max-w-md items-center justify-center">
+        <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-3">
+          <div className="space-y-3 border border-[#242321]/15 p-4">
+            <div className="h-2 w-full bg-[#242321]/15" />
+            <div className="h-2 w-3/4 bg-[#242321]/15" />
+            <div className="h-16 bg-[#242321]/5" />
+            <span className="block font-mono text-[9px] text-[#77736D]">
+              BEFORE
+            </span>
+          </div>
+          <ArrowRight className="text-[#F15A36]" size={24} />
+          <div className="space-y-3 border border-[#F15A36]/40 bg-white p-4 shadow-lg">
+            <div className="h-2 w-full bg-[#F15A36]" />
+            <div className="h-2 w-3/4 bg-[#242321]/20" />
+            <div className="flex h-16 items-center justify-center bg-[#F15A36]/10">
+              <Layers3 size={32} className="text-[#F15A36]" />
+            </div>
+            <span className="block font-mono text-[9px] text-[#F15A36]">
+              AFTER
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "launch") {
+    return (
+      <div className="relative mx-auto flex min-h-[300px] w-full max-w-md items-center justify-center overflow-hidden">
+        <div className="absolute bottom-[10%] h-36 w-36 rounded-full bg-[#F15A36]/20 blur-3xl" />
+        <div className="absolute bottom-[10%] left-[15%] h-px w-[70%] bg-white/20" />
+        <div className="absolute bottom-[10%] left-[28%] h-px w-[44%] rotate-[-25deg] bg-[#F15A36]/70" />
+        <div className="relative rotate-[-38deg]">
+          <Rocket size={140} strokeWidth={0.8} className="text-[#F15A36]" />
+        </div>
+        <span className="absolute bottom-[6%] right-[6%] font-mono text-[10px] tracking-widest text-white/50">
+          READY FOR TAKEOFF
+        </span>
+      </div>
+    );
+  }
+
+  return <PaperRocket />;
+}
+
+function StoryScene({
+  scene,
+  index,
+}: {
+  scene: (typeof scenes)[number];
+  index: number;
+}) {
+  const Icon = scene.icon;
+  const isDark = scene.background.includes("#242321");
+  const isFinal = scene.visual === "final";
+  const isEven = index % 2 === 0;
+
+  return (
+    <section
+      id={`scene-${scene.number}`}
+      data-scene
+      className={`relative overflow-hidden px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32 ${scene.background}`}
+    >
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 ${
+          isDark ? "opacity-[0.06]" : "opacity-[0.12]"
+        }`}
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(36,35,33,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(36,35,33,.22) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          maskImage: "linear-gradient(to bottom, black, transparent 80%)",
+        }}
+      />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className={`${isEven ? "lg:order-1" : "lg:order-2"} scene-copy`}>
+          <SectionLabel number={scene.number} light={isDark}>
+            {scene.eyebrow}
+          </SectionLabel>
+
+          <div className="mb-6 flex items-center gap-3">
+            <span
+              className={`flex h-11 w-11 items-center justify-center rounded-full ${
+                isFinal
+                  ? "bg-[#242321] text-[#F15A36]"
+                  : "bg-[#F15A36]/10 text-[#F15A36]"
+              }`}
+            >
+              <Icon size={20} strokeWidth={1.7} />
+            </span>
+            <span
+              className={`font-mono text-[10px] tracking-[0.16em] ${
+                isDark ? "text-white/40" : "text-[#77736D]"
+              }`}
+            >
+              STORY / {scene.number}
+            </span>
+          </div>
+
+          <h2
+            className={`max-w-xl text-4xl font-black leading-[1.05] tracking-[-0.055em] sm:text-5xl md:text-6xl ${
+              isDark ? "text-[#F5F0E7]" : "text-[#242321]"
+            }`}
+          >
+            {scene.title.split(" ").map((word, wordIndex, words) => {
+              const highlightWords: Record<string, boolean> = {
+                idea: true,
+                vision: true,
+                build: true,
+                interaction: true,
+                difference: true,
+                purpose: true,
+                clarity: true,
+                launch: true,
+                meaningful: true,
+              };
+
+              const cleanWord = word.toLowerCase().replace(/[.,!?]/g, "");
+              const highlight = highlightWords[cleanWord];
+              const finalWord = wordIndex === words.length - 1;
+
+              return (
+                <span
+                  key={`${word}-${wordIndex}`}
+                  className={
+                    highlight || (isFinal && finalWord) ? "text-[#F15A36]" : ""
+                  }
+                >
+                  {word}
+                  {wordIndex < words.length - 1 ? " " : ""}
+                </span>
+              );
+            })}
+          </h2>
+
+          <p
+            className={`mt-6 max-w-lg text-base leading-8 sm:text-lg ${
+              isDark ? "text-white/60" : "text-[#77736D]"
+            }`}
+          >
+            {scene.description}
+          </p>
+
+          <div
+            className={`mt-8 inline-flex items-center gap-3 border-t pt-5 font-mono text-[10px] tracking-[0.12em] ${
+              isDark
+                ? "border-white/15 text-white/45"
+                : "border-[#242321]/15 text-[#77736D]"
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-[#F15A36]" />
+            {scene.tag}
+          </div>
+
+          {isFinal && (
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link
+                href="#projects"
+                className="inline-flex items-center gap-2 bg-[#242321] px-6 py-4 text-sm font-bold text-[#F5F0E7] transition-transform hover:-translate-y-1"
+              >
+                Explore my work <ArrowUpRight size={17} />
+              </Link>
+              <Link
+                href="#contact"
+                className="inline-flex items-center gap-2 border border-[#242321]/30 px-6 py-4 text-sm font-bold text-[#242321] transition-colors hover:bg-[#242321] hover:text-[#F5F0E7]"
+              >
+                Let's talk <ArrowRight size={17} />
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div
+          className={`scene-visual relative ${
+            isEven ? "lg:order-2" : "lg:order-1"
+          }`}
+        >
+          <div
+            className={`absolute inset-8 rounded-full blur-3xl ${
+              isFinal ? "bg-[#242321]/10" : "bg-[#F15A36]/[0.07]"
+            }`}
+          />
+          <div className="relative">
+            <SceneVisual type={scene.visual} />
+          </div>
+          <span
+            className={`mt-5 block text-center font-mono text-[9px] tracking-[0.2em] ${
+              isDark ? "text-white/30" : "text-[#77736D]/80"
+            }`}
+          >
+            RAMIL AOANAN / DIGITAL EXPERIENCE
+          </span>
+        </div>
+      </div>
+
+      <span
+        aria-hidden="true"
+        className={`absolute bottom-5 right-6 font-mono text-5xl font-black tracking-tighter sm:bottom-8 sm:right-10 sm:text-7xl ${
+          isDark ? "text-white/[0.04]" : "text-[#242321]/[0.045]"
+        }`}
+      >
+        {scene.number}
+      </span>
     </section>
+  );
+}
+
+export default function CinematicHero() {
+  const rootRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-scene]").forEach((scene) => {
+        const copy = scene.querySelector(".scene-copy");
+        const visual = scene.querySelector(".scene-visual");
+
+        if (copy) {
+          gsap.fromTo(
+            copy,
+            { y: 28, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: scene,
+                start: "top 78%",
+                once: true,
+              },
+            },
+          );
+        }
+
+        if (visual) {
+          gsap.fromTo(
+            visual,
+            { y: 24, opacity: 0, scale: 0.98 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.9,
+              delay: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: scene,
+                start: "top 78%",
+                once: true,
+              },
+            },
+          );
+        }
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <main
+      ref={rootRef}
+      className="min-h-screen overflow-clip bg-[#F5F0E7] font-sans text-[#242321] selection:bg-[#F15A36] selection:text-white"
+    >
+      {/* Persistent navigation */}
+      <header className="sticky top-0 z-50 border-b border-[#242321]/10 bg-[#F5F0E7]/90 backdrop-blur-xl">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-12">
+          <BrandMark />
+
+          <div className="hidden items-center gap-8 text-xs font-semibold text-[#77736D] sm:flex">
+            <Link
+              className="transition-colors hover:text-[#F15A36]"
+              href="#scene-01"
+            >
+              The idea
+            </Link>
+            <Link
+              className="transition-colors hover:text-[#F15A36]"
+              href="#scene-06"
+            >
+              Technology
+            </Link>
+            <Link
+              className="transition-colors hover:text-[#F15A36]"
+              href="#projects"
+            >
+              Projects
+            </Link>
+          </div>
+
+          <Link
+            href="#contact"
+            className="inline-flex items-center gap-2 bg-[#242321] px-4 py-2.5 text-xs font-bold text-[#F5F0E7] transition-colors hover:bg-[#F15A36]"
+          >
+            Let's talk <ArrowUpRight size={15} />
+          </Link>
+        </nav>
+      </header>
+
+      {/* Opening introduction */}
+      <section
+        id="home"
+        className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(36,35,33,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(36,35,33,.22) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            maskImage: "linear-gradient(to bottom, black, transparent)",
+          }}
+        />
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[1.05fr_.95fr] lg:gap-16">
+          <div className="order-2 md:order-1">
+            <div className="mb-7 inline-flex items-center gap-2 border border-[#242321]/15 px-3 py-2 font-mono text-[10px] tracking-[0.14em] text-[#77736D]">
+              <span className="h-2 w-2 rounded-full bg-[#F15A36]" />
+              INDEPENDENT WEB DEVELOPER
+            </div>
+
+            <h1 className="max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.065em] sm:text-6xl lg:text-8xl">
+              RAMIL
+              <br />
+              AOANAN<span className="text-[#F15A36]">.</span>
+            </h1>
+
+            <p className="mt-7 max-w-xl text-lg leading-8 text-[#77736D] sm:text-xl">
+              I turn ideas into{" "}
+              <span className="font-semibold text-[#242321]">
+                thoughtful digital experiences
+              </span>{" "}
+              through design, code, and a little curiosity.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="#scene-01"
+                className="inline-flex items-center gap-2 bg-[#F15A36] px-6 py-4 text-sm font-bold text-white transition-transform hover:-translate-y-1"
+              >
+                Explore my story <ArrowDown size={17} />
+              </Link>
+
+              <Link
+                href="https://github.com/ramilinator"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 border border-[#242321]/20 px-6 py-4 text-sm font-bold transition-colors hover:bg-[#242321] hover:text-[#F5F0E7]"
+              >
+                GitHub <ArrowUpRight size={17} />
+              </Link>
+            </div>
+
+            <div className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t border-[#242321]/15 pt-5">
+              <div>
+                <p className="text-xl font-black">05+</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#77736D]">
+                  Years in frontend
+                </p>
+              </div>
+              <div>
+                <p className="text-xl font-black">React</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#77736D]">
+                  Modern UI
+                </p>
+              </div>
+              <div>
+                <p className="text-xl font-black">Next.js</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-[#77736D]">
+                  Web systems
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative order-1 mx-auto w-full max-w-md md:order-2">
+            <div className="absolute inset-8 rounded-full bg-[#F15A36]/15 blur-3xl" />
+
+            <div className="relative mx-auto aspect-[4/5] max-w-[390px] overflow-hidden border border-[#242321]/10 bg-[#EEE6DA]">
+              <div className="absolute left-4 top-4 z-10 font-mono text-[10px] tracking-widest text-[#77736D]">
+                FIG. 001 / THE DEVELOPER
+              </div>
+
+              <Image
+                src="/images/profile.png"
+                alt="Ramil Aoanan"
+                fill
+                priority
+                sizes="(max-width: 768px) 90vw, 390px"
+                className="object-contain object-bottom p-4 pt-12"
+              />
+
+              <div className="absolute bottom-0 left-0 right-0 bg-[#242321] p-5 text-[#F5F0E7]">
+                <p className="font-mono text-[10px] tracking-[0.18em] text-white/50">
+                  CURRENT FOCUS
+                </p>
+                <p className="mt-2 text-lg font-bold">
+                  Building for the web<span className="text-[#F15A36]">.</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute -right-2 top-[28%] hidden border border-[#242321]/10 bg-[#F5F0E7] p-4 shadow-lg sm:block">
+              <Braces size={25} className="text-[#F15A36]" />
+            </div>
+            <div className="absolute -left-3 bottom-[23%] hidden bg-[#F15A36] p-4 text-white shadow-lg sm:block">
+              <Code2 size={23} />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative mx-auto mt-16 flex max-w-7xl items-center justify-between border-t border-[#242321]/15 pt-5">
+          <span className="font-mono text-[10px] tracking-widest text-[#77736D]">
+            SCROLL TO EXPLORE / 09 CHAPTERS
+          </span>
+          <ArrowDownRight size={20} className="text-[#F15A36]" />
+        </div>
+      </section>
+
+      {/* The nine-story narrative */}
+      {scenes.map((scene, index) => (
+        <StoryScene key={scene.number} scene={scene} index={index} />
+      ))}
+
+      {/* Projects anchor */}
+      <section
+        id="projects"
+        className="scroll-mt-20 bg-[#EEE6DA] px-5 py-20 sm:px-8 sm:py-24 lg:px-12"
+      >
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <SectionLabel number="10">THE WORK</SectionLabel>
+            <h2 className="max-w-2xl text-4xl font-black tracking-[-0.05em] sm:text-6xl">
+              Ideas made <span className="text-[#F15A36]">real.</span>
+            </h2>
+            <p className="mt-5 max-w-xl leading-7 text-[#77736D]">
+              Explore projects that bring together modern frontend development,
+              useful functionality, and considered design.
+            </p>
+          </div>
+          <Link
+            href="https://github.com/ramilinator"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex w-fit items-center gap-2 border border-[#242321]/20 px-5 py-3 text-sm font-bold transition-colors hover:bg-[#242321] hover:text-[#F5F0E7]"
+          >
+            View GitHub projects <ArrowUpRight size={17} />
+          </Link>
+        </div>
+
+        <div className="mx-auto mt-10 grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              title: "Modern Blog",
+              description:
+                "A content-driven blog built with Next.js and Strapi.",
+              stack: "NEXT.JS / STRAPI",
+              number: "01",
+            },
+            {
+              title: "Movie Discovery",
+              description:
+                "A movie discovery experience powered by an external API.",
+              stack: "REACT / API",
+              number: "02",
+            },
+            {
+              title: "Digital Experience",
+              description:
+                "An interactive interface exploring motion and presentation.",
+              stack: "REACT / GSAP",
+              number: "03",
+            },
+          ].map((project) => (
+            <article
+              key={project.number}
+              className="group border border-[#242321]/10 bg-[#F5F0E7] p-6 transition-transform hover:-translate-y-1 sm:p-8"
+            >
+              <div className="mb-12 flex items-center justify-between">
+                <span className="font-mono text-xs text-[#77736D]">
+                  PROJECT / {project.number}
+                </span>
+                <ArrowUpRight
+                  size={20}
+                  className="text-[#F15A36] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </div>
+              <h3 className="text-2xl font-black tracking-tight">
+                {project.title}
+              </h3>
+              <p className="mt-3 min-h-14 leading-6 text-[#77736D]">
+                {project.description}
+              </p>
+              <div className="mt-6 border-t border-[#242321]/10 pt-4 font-mono text-[10px] tracking-widest text-[#F15A36]">
+                {project.stack}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section
+        id="contact"
+        className="scroll-mt-20 bg-[#F15A36] px-5 py-20 sm:px-8 sm:py-28 lg:px-12"
+      >
+        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <p className="mb-5 font-mono text-xs tracking-[0.2em] text-[#242321]/65">
+              HAVE SOMETHING IN MIND?
+            </p>
+            <h2 className="max-w-3xl text-5xl font-black leading-[0.98] tracking-[-0.06em] sm:text-7xl">
+              Let's make your next idea happen.
+            </h2>
+            <p className="mt-6 max-w-xl leading-7 text-[#242321]/75">
+              Whether you're planning a website, improving an existing product,
+              or exploring a new idea, I'd love to hear about it.
+            </p>
+          </div>
+
+          <Link
+            href="mailto:hello@ramilaoanan.com"
+            className="inline-flex w-fit items-center gap-3 bg-[#242321] px-6 py-4 text-sm font-bold text-[#F5F0E7] transition-transform hover:-translate-y-1"
+          >
+            Get in touch <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
+
+      <footer className="bg-[#242321] px-5 py-6 text-[#F5F0E7] sm:px-8 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <BrandMark light />
+          <p className="text-xs text-white/45">
+            © {new Date().getFullYear()} Ramil Aoanan. Built with intention.
+          </p>
+          <Link
+            href="#home"
+            className="inline-flex items-center gap-2 text-xs font-semibold transition-colors hover:text-[#F15A36]"
+          >
+            Back to top <ArrowUpRight size={14} />
+          </Link>
+        </div>
+      </footer>
+    </main>
   );
 }
