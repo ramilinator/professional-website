@@ -1,162 +1,26 @@
-/* =========================================================
-   CINEMATIC HERO — BRAND SYSTEM
-   Cream:    #F5F0E7
-   Orange:   #F15A36
-   Charcoal: #242321
-   ========================================================= */
+/* CinematicHero.css */
 
-:root {
-    --brand-cream: #f5f0e7;
-    --brand-orange: #f15a36;
-    --brand-orange-hover: #d94727;
-    --brand-charcoal: #242321;
-    --brand-charcoal-hover: #3a3835;
-    --brand-muted: #77736d;
-
-    --brand-border: rgb(36 35 33 / 14%);
-    --brand-transition: 220ms ease;
+.cinematic-hero {
+    font-family: inherit;
+    color: #242321;
 }
 
-/* =========================================================
-   BASE
-   ========================================================= */
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+.cinematic-hero h1,
+.cinematic-hero h2,
+.cinematic-hero h3,
+.cinematic-hero p,
+.cinematic-hero a,
+.cinematic-hero span {
+    font-family: inherit;
 }
 
-body {
-    margin: 0;
-    background-color: var(--brand-cream);
-    color: var(--brand-charcoal);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* Keep technical labels and code examples monospaced. */
+.cinematic-hero .font-mono {
+    font-family: var(--font-mono, monospace);
 }
 
-* {
-    box-sizing: border-box;
-}
-
-::selection {
-    background-color: var(--brand-orange);
-    color: #fff;
-}
-
-/* Keep media responsive without changing their intended ratio. */
-
-img,
-svg,
-video {
-    max-width: 100%;
-}
-
-/* =========================================================
-   SCENE REVEALS
-   GSAP controls the actual reveal animation.
-   These styles provide safe defaults before animation.
-   ========================================================= */
-
-[data-scene] {
-    position: relative;
-    isolation: isolate;
-    scroll-margin-top: 5rem;
-}
-
-.scene-copy,
-.scene-visual {
-    min-width: 0;
-}
-
-/* Prevent decorative elements from creating horizontal scroll. */
-
-.scene-visual {
-    overflow-wrap: anywhere;
-}
-
-/* =========================================================
-   LINKS AND BUTTONS
-   Do not assign global text colors here. Tailwind classes
-   control each button's background and foreground colors.
-   ========================================================= */
-
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-a:focus-visible,
-button:focus-visible {
-    outline: 3px solid var(--brand-orange);
+/* Accessible keyboard focus. */
+.cinematic-hero a:focus-visible {
+    outline: 2px solid #F15A36;
     outline-offset: 4px;
-}
-
-/* Preserve clear hover feedback on devices with a pointer. */
-
-@media (hover: hover) and (pointer: fine) {
-
-    a,
-    button {
-        transition:
-            color var(--brand-transition),
-            background-color var(--brand-transition),
-            border-color var(--brand-transition),
-            box-shadow var(--brand-transition),
-            transform var(--brand-transition);
-    }
-}
-
-/* =========================================================
-   DECORATIVE SCENE DETAILS
-   ========================================================= */
-
-.scene-visual svg {
-    display: block;
-}
-
-.scene-visual img {
-    display: block;
-    height: auto;
-}
-
-/* Ensure the page's illustrations never block interactions. */
-
-[aria-hidden="true"] {
-    pointer-events: none;
-}
-
-/* =========================================================
-   RESPONSIVE LAYOUT
-   ========================================================= */
-
-@media (max-width: 640px) {
-    html {
-        scroll-padding-top: 4.5rem;
-    }
-
-    [data-scene] {
-        scroll-margin-top: 4.5rem;
-    }
-
-    .scene-visual {
-        width: 100%;
-    }
-}
-
-/* =========================================================
-   ACCESSIBILITY — REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
 }

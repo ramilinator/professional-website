@@ -19,6 +19,7 @@ import {
   Sparkles,
   Terminal,
   Workflow,
+  Zap,
 } from "lucide-react";
 
 import "./CinematicHero.css";
@@ -28,88 +29,88 @@ gsap.registerPlugin(ScrollTrigger);
 const scenes = [
   {
     number: "01",
-    eyebrow: "THE BEGINNING",
+    eyebrow: "START WITH AN IDEA",
     title: "Every great thing starts with an idea.",
     description:
-      "Every website, application, and digital experience begins with a question: what if we could make this better?",
-    tag: "IDEA → POSSIBILITY",
+      "Every meaningful digital experience begins with a question, a problem, or an idea worth bringing to life.",
+    tag: "IDEAS INTO EXPERIENCES",
     icon: Sparkles,
     background: "cream",
     visual: "idea",
   },
   {
     number: "02",
-    eyebrow: "THE DIRECTION",
+    eyebrow: "DESIGN WITH PURPOSE",
     title: "Give the idea a vision.",
     description:
-      "A good concept needs direction. I turn ideas into thoughtful layouts, purposeful interfaces, and experiences built around real people.",
-    tag: "VISION → BLUEPRINT",
-    icon: Workflow,
+      "A clear direction turns a rough concept into an experience that feels intentional, intuitive, and easy to understand.",
+    tag: "PURPOSE BEFORE PIXELS",
+    icon: MousePointer2,
     background: "charcoal",
     visual: "vision",
   },
   {
     number: "03",
-    eyebrow: "THE CRAFT",
+    eyebrow: "BUILD THE FOUNDATION",
     title: "Then, we build.",
     description:
-      "I bring designs to life with clean, maintainable code and modern web technologies—building interfaces that work as beautifully as they look.",
-    tag: "BLUEPRINT → CODE",
+      "Thoughtful architecture and maintainable code create the foundation for digital products that can grow.",
+    tag: "CLEAN CODE / SOLID FOUNDATIONS",
     icon: Code2,
-    background: "cream",
-    visual: "build",
+    background: "sand",
+    visual: "code",
   },
   {
     number: "04",
-    eyebrow: "THE INTERACTION",
+    eyebrow: "DESIGN IN MOTION",
     title: "Make every interaction count.",
     description:
-      "Navigation should feel natural. Feedback should feel immediate. Every interaction should help people move confidently through the experience.",
-    tag: "CODE → INTERACTION",
-    icon: MousePointer2,
-    background: "sand",
-    visual: "experience",
+      "From subtle transitions to meaningful feedback, every interaction should feel natural and help people move forward.",
+    tag: "INTERACTION WITH INTENTION",
+    icon: Zap,
+    background: "cream",
+    visual: "interaction",
   },
   {
     number: "05",
-    eyebrow: "THE FINISHING TOUCH",
+    eyebrow: "THE FINER DETAILS",
     title: "The details make the difference.",
     description:
-      "Spacing, typography, accessibility, responsiveness, and performance all matter. I refine the details until everything feels intentional.",
-    tag: "INTERACTION → PRECISION",
-    icon: Check,
+      "Responsive layouts, accessible controls, thoughtful typography, and consistent spacing turn a good interface into a polished one.",
+    tag: "DETAILS MATTER",
+    icon: Layers3,
     background: "charcoal",
     visual: "details",
   },
   {
     number: "06",
-    eyebrow: "THE TOOLKIT",
+    eyebrow: "THE RIGHT TECHNOLOGY",
     title: "Technology with a purpose.",
     description:
-      "From React and Next.js to Tailwind CSS and headless CMS platforms, I choose tools that fit the problem instead of adding complexity for its own sake.",
-    tag: "PRECISION → TECHNOLOGY",
+      "The best tools are the ones that solve real problems. I use modern web technologies to create practical, reliable experiences.",
+    tag: "THE RIGHT TOOL FOR THE JOB",
     icon: Terminal,
-    background: "cream",
+    background: "sand",
     visual: "technology",
   },
   {
     number: "07",
-    eyebrow: "THE CONNECTION",
+    eyebrow: "SIMPLIFY THE COMPLEX",
     title: "Turn complexity into clarity.",
     description:
-      "A successful product brings its design, content, and functionality together. The result is a digital experience that feels like one complete solution.",
-    tag: "TECHNOLOGY → INTEGRATION",
-    icon: Layers3,
-    background: "sand",
-    visual: "transformation",
+      "Good development is not just about making things work. It is about making them easier to use, understand, and maintain.",
+    tag: "LESS FRICTION / MORE CLARITY",
+    icon: Braces,
+    background: "cream",
+    visual: "clarity",
   },
   {
     number: "08",
-    eyebrow: "THE MOMENT",
+    eyebrow: "READY FOR WHAT'S NEXT",
     title: "Ready for launch.",
     description:
-      "Testing, refining, and preparing for production turn a promising build into something people can actually use. This is where the work comes together.",
-    tag: "INTEGRATION → LAUNCH",
+      "With the details in place, an idea becomes a real experience — ready to reach people, solve problems, and make an impact.",
+    tag: "FROM CONCEPT TO LAUNCH",
     icon: Rocket,
     background: "charcoal",
     visual: "launch",
@@ -162,11 +163,13 @@ function SectionLabel({
   return (
     <div
       className={`mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] ${
-        light ? "text-white/70" : "text-[#77736D]"
+        light ? "text-white/85" : "text-[#77736D]"
       }`}
     >
-      <span className="font-bold text-[#F15A36]">{number}</span>
-      <span className="h-px w-8 bg-[#F15A36]" />
+      <span className={`font-bold ${light ? "text-white" : "text-[#F15A36]"}`}>
+        {number}
+      </span>
+      <span className={`h-px w-8 ${light ? "bg-white/70" : "bg-[#F15A36]"}`} />
       <span>{children}</span>
     </div>
   );
@@ -448,9 +451,11 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
   const isFinal = scene.background === "orange";
   const isEven = index % 2 === 0;
 
-  const titleColor = isDark ? "text-[#F5F0E7]" : "text-[#242321]";
-  const bodyColor = isDark ? "text-white/80" : "text-[#5F5A54]";
-  const metaColor = isDark ? "text-white/70" : "text-[#5F5A54]";
+  const titleColor = isDark || isFinal ? "text-[#F5F0E7]" : "text-[#242321]";
+
+  const bodyColor = isDark || isFinal ? "text-white/85" : "text-[#5F5A54]";
+
+  const metaColor = isDark || isFinal ? "text-white/80" : "text-[#5F5A54]";
 
   return (
     <section
@@ -481,7 +486,7 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div className={`scene-copy ${isEven ? "lg:order-1" : "lg:order-2"}`}>
-          <SectionLabel number={scene.number} light={isDark}>
+          <SectionLabel number={scene.number} light={isDark || isFinal}>
             {scene.eyebrow}
           </SectionLabel>
 
@@ -490,7 +495,9 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
               className={`flex h-11 w-11 items-center justify-center rounded-full ${
                 isDark
                   ? "bg-[#F15A36]/15 text-[#FF8A6D]"
-                  : "bg-[#242321]/[0.06] text-[#F15A36]"
+                  : isFinal
+                    ? "bg-white/15 text-white"
+                    : "bg-[#242321]/[0.06] text-[#F15A36]"
               }`}
             >
               <Icon size={20} strokeWidth={1.7} />
@@ -527,11 +534,11 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
                   className={
                     highlight
                       ? isDark
-                        ? "text-[#FF8A6D]"
-                        : "text-[#C83C21]"
-                      : isFinal
-                        ? "text-[#242321]"
-                        : ""
+                        ? "text-[#FFB49F]"
+                        : isFinal
+                          ? "text-[#242321]"
+                          : "text-[#C83C21]"
+                      : ""
                   }
                 >
                   {word}
@@ -549,8 +556,8 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
 
           <div
             className={`mt-8 inline-flex items-center gap-3 border-t pt-5 font-mono text-[10px] tracking-[0.12em] ${
-              isDark
-                ? "border-white/20 text-white/75"
+              isDark || isFinal
+                ? "border-white/25 text-white/80"
                 : "border-[#242321]/20 text-[#5F5A54]"
             }`}
           >
@@ -601,7 +608,7 @@ function StoryScene({ scene, index }: { scene: Scene; index: number }) {
       <span
         aria-hidden="true"
         className={`absolute bottom-5 right-6 font-mono text-5xl font-black tracking-tighter sm:bottom-8 sm:right-10 sm:text-7xl ${
-          isDark ? "text-white/[0.06]" : "text-[#242321]/[0.06]"
+          isDark || isFinal ? "text-white/[0.12]" : "text-[#242321]/[0.06]"
         }`}
       >
         {scene.number}
@@ -706,7 +713,7 @@ export default function CinematicHero() {
 
       <section
         id="home"
-        className="relative scroll-mt-20 overflow-hidden px-5 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+        className="relative scroll-mt-20 overflow-hidden bg-[#F5F0E7] px-5 py-16 text-[#242321] sm:px-8 sm:py-24 lg:px-12 lg:py-28"
       >
         <div
           aria-hidden="true"
@@ -780,7 +787,7 @@ export default function CinematicHero() {
           <div className="relative order-1 mx-auto w-full max-w-md md:order-2">
             <div className="absolute inset-8 rounded-full bg-[#F15A36]/15 blur-3xl" />
 
-            <div className="relative mx-auto aspect-[4/5] max-w-[390px] overflow-hidden border border-[#242321]/10 bg-[#EEE6DA]">
+            <div className="relative mx-auto aspect-[4/5] max-w-[390px] overflow-hidden border border-[#242321]/10 bg-[#EEE6DA] shadow-xl shadow-[#242321]/[0.06]">
               <div className="absolute left-4 top-4 z-10 font-mono text-[10px] font-semibold tracking-widest text-[#5F5A54]">
                 FIG. 001 / THE DEVELOPER
               </div>
